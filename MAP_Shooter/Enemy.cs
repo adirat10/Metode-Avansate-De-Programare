@@ -12,9 +12,8 @@ namespace MAP_Shooter
 {
     public class Enemy
     {
-        double health, speed, damage, size;
-        Point position;
-        PictureBox image;
+        public double health, speed, damage, size, positionX;
+        public Point position;
 
         public Enemy(double health, double speed, double damage, double size)
         {
@@ -23,17 +22,23 @@ namespace MAP_Shooter
             this.damage = damage;
             this.size = size;
             position = Engine.GetRandomPoint((int)size);
-
-            image = new PictureBox();
-            image.Parent = Engine.form.pictureBox1;
-            image.Size = new Size((int)size, (int)size);
-            image.BackColor = Color.White;
-            image.Location = position;
+            positionX = position.X;
         }
         public void Move()
         {
             position.Y += (int)speed;
-            image.Location = position;
+            size += 1.0 / 4;
+            positionX -= 1.0 / 8;
+            position.X = (int)positionX;
+        }
+        public void GetShot(Point click)
+        {
+            if (click.X > position.X && click.X < position.X + size && click.Y > position.Y && click.Y < position.Y + size)
+            {
+                health -= 20;
+                Engine.graphics.DrawString("20", new Font("Arial", 12), new SolidBrush(Color.Black), click.X,click.Y-20);
+                Engine.form.pictureBox1.Image = Engine.bitmap;
+            }
         }
     }
 }

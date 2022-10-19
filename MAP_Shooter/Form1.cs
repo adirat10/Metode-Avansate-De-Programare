@@ -27,10 +27,18 @@ namespace MAP_Shooter
             if (e.KeyCode == Keys.Escape)
                 Close();
         }
-
+        private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
+        {
+            Engine.Shoot(e.Location);
+        }
         private void timer1_Tick(object sender, EventArgs e)
         {
-            Engine.enemy.Move();
+            foreach (Enemy enemy in Engine.enemies)
+            {
+                enemy.Move();
+                Engine.UpdateDisplay();
+            }
         }
     }
 }
+
