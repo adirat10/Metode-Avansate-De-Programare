@@ -28,6 +28,9 @@ namespace MAP_Shooter
                 Close();
         }
 
-
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            Engine.enemy.Move();
+        }
     }
 }
