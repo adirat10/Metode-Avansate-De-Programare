@@ -18,7 +18,7 @@ namespace MAP_Shooter
         public static Graphics graphics;
         public static Bitmap bitmap;
         public static int horizon = 100;
-        public static int time = 0;
+        public static double time = 0;
         public static double fortHealth = 100;
 
         public static void Init(Form1 f1)
@@ -35,6 +35,7 @@ namespace MAP_Shooter
         public static void Tick()
         {
             time++;
+            form.Timelabel.Text =$"{time / 10}s";
             if (wave.Any() && wave[0].spawnTime <= time)
             {
                 enemies.Add(wave[0]);
@@ -47,6 +48,7 @@ namespace MAP_Shooter
                 if (enemy.position.Y >= form.Height)
                 {
                     fortHealth -= enemy.damage;
+                    form.HealthLabel.Text = $"Health:{fortHealth}";
                     enemies.Remove(enemies[i]);
                     i--;
                 }

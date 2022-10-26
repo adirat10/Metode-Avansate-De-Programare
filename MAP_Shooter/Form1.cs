@@ -22,12 +22,20 @@ namespace MAP_Shooter
         {
             pictureBox1.Width = this.Width;
             pictureBox1.Height = this.Height;
+            Timelabel.Parent = WaveLabel.Parent = HealthLabel.Parent = pictureBox1;
             Engine.Init(this);
         }
         private void Form1_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Escape)
-                Close();
+            {
+                timer1.Enabled = false;
+                var option = MessageBox.Show("Are you sure you want to exit this game? Your progress will not be saved!",
+                    "Exit game", MessageBoxButtons.OKCancel);
+                if (option == DialogResult.OK)
+                    Close();
+                timer1.Enabled = true;
+            }
         }
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
         {
