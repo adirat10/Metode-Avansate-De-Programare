@@ -35,11 +35,7 @@ namespace MAP_Shooter
         }
         private void timer1_Tick(object sender, EventArgs e)
         {
-            foreach (Enemy enemy in Engine.enemies)
-            {
-                enemy.Move();
-                Engine.UpdateDisplay();
-            }
+            Engine.Tick();
         }
     }
 }

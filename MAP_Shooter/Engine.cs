@@ -14,20 +14,35 @@ namespace MAP_Shooter
     {
         public static Form1 form;
         public static Random random = new Random();
-        public static List<Enemy> enemies = new List<Enemy>();
+        public static List<Enemy> enemies = new List<Enemy>(), wave = new List<Enemy>();
         public static Graphics graphics;
         public static Bitmap bitmap;
         public static int horizon = 100;
+        public static int time = 0;
         public static void Init(Form1 f1)
         {
             form = f1;
             bitmap = new Bitmap(form.Width, form.Height);
             graphics = Graphics.FromImage(bitmap);
-            enemies.Add(new Enemy(100, 5, 0, 50, 80));
-            enemies.Add(new Enemy(100, 5, 0, 50, 80));
-            enemies.Add(new Enemy(100, 5, 0, 50, 80));
-            enemies.Add(new Enemy(100, 5, 0, 50, 80));
-            enemies.Add(new Enemy(100, 5, 0, 50, 80));
+            wave.Add(new Enemy(100, 5, 0, 50, 80, 0));
+            wave.Add(new Enemy(100, 5, 0, 50, 80, 20));
+            wave.Add(new Enemy(100, 5, 0, 50, 80, 35));
+            wave.Add(new Enemy(100, 5, 0, 50, 80, 45));
+            wave.Add(new Enemy(100, 5, 0, 50, 80, 55));
+        }
+        public static void Tick()
+        {
+            time++;
+            if (wave.Any() && wave[0].spawnTime <= time)
+            {
+                enemies.Add(wave[0]);
+                wave.RemoveAt(0);
+            }
+            foreach (Enemy enemy in enemies)
+            {
+                enemy.Move();
+            }
+            UpdateDisplay();
         }
         public static void Shoot(Point click)
         {
@@ -40,7 +55,7 @@ namespace MAP_Shooter
                     i--;
                 }
             }
-            if (enemies.Count == 0)
+            if (!wave.Any() && !enemies.Any())
             {
                 form.timer1.Enabled = false;
                 MessageBox.Show("You defeated all the enemies!", "You Win!");
