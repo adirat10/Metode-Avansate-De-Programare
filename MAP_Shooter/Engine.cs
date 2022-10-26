@@ -23,11 +23,11 @@ namespace MAP_Shooter
             form = f1;
             bitmap = new Bitmap(form.Width, form.Height);
             graphics = Graphics.FromImage(bitmap);
-            enemies.Add(new Enemy(100, 5, 0, 50));
-            enemies.Add(new Enemy(100, 5, 0, 50));
-            enemies.Add(new Enemy(100, 5, 0, 50));
-            enemies.Add(new Enemy(100, 5, 0, 50));
-            enemies.Add(new Enemy(100, 5, 0, 50));
+            enemies.Add(new Enemy(100, 5, 0, 50, 80));
+            enemies.Add(new Enemy(100, 5, 0, 50, 80));
+            enemies.Add(new Enemy(100, 5, 0, 50, 80));
+            enemies.Add(new Enemy(100, 5, 0, 50, 80));
+            enemies.Add(new Enemy(100, 5, 0, 50, 80));
         }
         public static void Shoot(Point click)
         {
@@ -47,17 +47,18 @@ namespace MAP_Shooter
                 form.Close();
             }
         }
-        public static Point GetRandomPoint(int size)
+        public static Point GetRandomPoint(int sizeX, int sizeY)
         {
-            return new Point(random.Next(form.Width - size), horizon - size);
+            return new Point(random.Next(form.Width - sizeX), horizon - sizeY);
         }
         public static void UpdateDisplay()
         {
-            graphics.Clear(Color.SkyBlue);
+            graphics.DrawImage(form.background, 0, 0, form.Width, form.Height);
 
             foreach (Enemy enemy in enemies)
             {
-                graphics.FillRectangle(new SolidBrush(Color.White), enemy.position.X, enemy.position.Y, (int)enemy.size, (int)enemy.size);
+                graphics.DrawImage(form.target, enemy.position.X, enemy.position.Y, (int)enemy.sizeX, (int)enemy.sizeY);
+                //graphics.FillRectangle(new SolidBrush(Color.White), enemy.position.X, enemy.position.Y, (int)enemy.size, (int)enemy.size);
             }
             form.pictureBox1.Image = bitmap;
         }
