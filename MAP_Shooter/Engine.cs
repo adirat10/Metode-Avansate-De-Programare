@@ -19,16 +19,18 @@ namespace MAP_Shooter
         public static Bitmap bitmap;
         public static int horizon = 100;
         public static int time = 0;
+        public static double fortHealth = 100;
+
         public static void Init(Form1 f1)
         {
             form = f1;
             bitmap = new Bitmap(form.Width, form.Height);
             graphics = Graphics.FromImage(bitmap);
-            wave.Add(new Enemy(100, 5, 0, 50, 80, 0));
-            wave.Add(new Enemy(100, 5, 0, 50, 80, 20));
-            wave.Add(new Enemy(100, 5, 0, 50, 80, 35));
-            wave.Add(new Enemy(100, 5, 0, 50, 80, 45));
-            wave.Add(new Enemy(100, 5, 0, 50, 80, 55));
+            wave.Add(new Enemy(100, 5, 20, 50, 80, 0));
+            wave.Add(new Enemy(100, 5, 20, 50, 80, 20));
+            wave.Add(new Enemy(100, 5, 20, 50, 80, 35));
+            wave.Add(new Enemy(100, 5, 20, 50, 80, 45));
+            wave.Add(new Enemy(100, 5, 20, 50, 80, 55));
         }
         public static void Tick()
         {
@@ -38,9 +40,22 @@ namespace MAP_Shooter
                 enemies.Add(wave[0]);
                 wave.RemoveAt(0);
             }
-            foreach (Enemy enemy in enemies)
+            for (int i = 0; i < enemies.Count; i++)
             {
+                Enemy enemy = enemies[i];
                 enemy.Move();
+                if (enemy.position.Y >= form.Height)
+                {
+                    fortHealth -= enemy.damage;
+                    enemies.Remove(enemies[i]);
+                    i--;
+                }
+            }
+            if (fortHealth <= 0)
+            {
+                form.timer1.Enabled = false;
+                MessageBox.Show("Your fort walls were destroyed!", "You Lose!");
+                form.Close();
             }
             UpdateDisplay();
         }
