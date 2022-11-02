@@ -94,6 +94,7 @@ namespace MAP_Shooter
         public static void Win()
         {
             form.timer1.Enabled = false;
+            form.backgroundSound.Stop();
             MessageBox.Show("You defeated all the enemies!", "You Win!");
             form.Close();
         }
@@ -136,6 +137,5 @@ namespace MAP_Shooter
             }
             form.pictureBox1.Image = bitmap;
         }
-
     }
 }

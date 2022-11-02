@@ -15,6 +15,7 @@ namespace MAP_Shooter
     {
         public Image background = Image.FromFile("../../Images/background.jpg");
         public Image target = Image.FromFile("../../Images/ghost3.png");
+        public Image pistol = Image.FromFile("../../Images/Pistol2.png");
         public SoundPlayer backgroundSound = new SoundPlayer("../../Sounds/sound2.wav");
 
         public Form1()
@@ -26,7 +27,8 @@ namespace MAP_Shooter
             pictureBox1.Width = this.Width;
             pictureBox1.Height = this.Height;
             Timelabel.Parent = WaveLabel.Parent = HealthLabel.Parent = pictureBox1;
-            backgroundSound.Play();
+            Gun.Parent = pictureBox1;
+            backgroundSound.PlayLooping();
             Engine.Init(this);
         }
         private void Form1_KeyUp(object sender, KeyEventArgs e)
@@ -34,6 +36,7 @@ namespace MAP_Shooter
             if (e.KeyCode == Keys.Escape)
             {
                 timer1.Enabled = false;
+                backgroundSound.Stop();
                 var option = MessageBox.Show("Are you sure you want to exit this game? Your progress will not be saved!",
                     "Exit game", MessageBoxButtons.OKCancel);
                 if (option == DialogResult.OK)
@@ -48,6 +51,10 @@ namespace MAP_Shooter
         private void timer1_Tick(object sender, EventArgs e)
         {
             Engine.Tick();
+        }
+        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        {
+            Gun.Location = new Point(e.Location.X, e.Location.Y + 20);
         }
     }
 }
