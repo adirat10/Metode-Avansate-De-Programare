@@ -39,6 +39,14 @@ namespace MAP_Shooter
         {
             if (click.X > position.X && click.X < position.X + sizeX && click.Y > position.Y && click.Y < position.Y + sizeY)
             {
+                int x = click.X - position.X;
+                int y = click.Y - position.Y;
+                Bitmap zombie = new Bitmap((int)sizeX, (int)sizeY);
+                Graphics grp = Graphics.FromImage(zombie);
+                grp.DrawImage(Engine.form.target, 0, 0, (int)sizeX, (int)sizeY);
+                if (zombie.GetPixel(x, y).ToArgb() == 0)
+                    return;
+
                 health -= 20;
                 Engine.graphics.DrawString("20", new Font("Arial", 12), new SolidBrush(Color.Black), click.X, click.Y - 20);
                 Engine.form.pictureBox1.Image = Engine.bitmap;

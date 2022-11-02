@@ -104,7 +104,7 @@
             // 
             this.Gun.BackColor = System.Drawing.Color.Transparent;
             this.Gun.Image = ((System.Drawing.Image)(resources.GetObject("Gun.Image")));
-            this.Gun.Location = new System.Drawing.Point(397, 351);
+            this.Gun.Location = new System.Drawing.Point(397, 347);
             this.Gun.Name = "Gun";
             this.Gun.Size = new System.Drawing.Size(200, 200);
             this.Gun.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;

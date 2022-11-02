@@ -130,6 +130,7 @@ namespace MAP_Shooter
         {
             graphics.DrawImage(form.background, 0, 0, form.Width, form.Height);
 
+            enemies.Sort((Enemy e1, Enemy e2) => e1.position.Y - e2.position.Y);
             foreach (Enemy enemy in enemies)
             {
                 graphics.DrawImage(form.target, enemy.position.X, enemy.position.Y, (int)enemy.sizeX, (int)enemy.sizeY);
