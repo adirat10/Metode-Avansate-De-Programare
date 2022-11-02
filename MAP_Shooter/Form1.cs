@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Media;
 
 namespace MAP_Shooter
 {
@@ -14,6 +15,8 @@ namespace MAP_Shooter
     {
         public Image background = Image.FromFile("../../Images/background.jpg");
         public Image target = Image.FromFile("../../Images/ghost3.png");
+        public SoundPlayer backgroundSound = new SoundPlayer("../../Sounds/Thriller.wav");
+
         public Form1()
         {
             InitializeComponent();
@@ -23,6 +26,7 @@ namespace MAP_Shooter
             pictureBox1.Width = this.Width;
             pictureBox1.Height = this.Height;
             Timelabel.Parent = WaveLabel.Parent = HealthLabel.Parent = pictureBox1;
+            backgroundSound.Play();
             Engine.Init(this);
         }
         private void Form1_KeyUp(object sender, KeyEventArgs e)
