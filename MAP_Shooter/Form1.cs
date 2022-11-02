@@ -15,7 +15,7 @@ namespace MAP_Shooter
     {
         public Image background = Image.FromFile("../../Images/background.jpg");
         public Image target = Image.FromFile("../../Images/ghost3.png");
-        public SoundPlayer backgroundSound = new SoundPlayer("../../Sounds/Thriller.wav");
+        public SoundPlayer backgroundSound = new SoundPlayer("../../Sounds/sound2.wav");
 
         public Form1()
         {
