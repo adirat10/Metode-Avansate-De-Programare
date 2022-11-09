@@ -4,9 +4,11 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace MAP_Shooter
 {
@@ -27,22 +29,23 @@ namespace MAP_Shooter
             form = f1;
             bitmap = new Bitmap(form.Width, form.Height);
             graphics = Graphics.FromImage(bitmap);
+
             var wave1 = new List<Enemy>();
-            wave1.Add(new Enemy(100, 5, 20, 50, 80, 0));
-            wave1.Add(new Enemy(100, 5, 20, 50, 80, 20));
-            wave1.Add(new Enemy(100, 5, 20, 50, 80, 35));
-            wave1.Add(new Enemy(100, 5, 20, 50, 80, 45));
-            wave1.Add(new Enemy(100, 5, 20, 50, 80, 55));
+            wave1.Add(new NormalEnemy(0));
+            wave1.Add(new NormalEnemy(20));
+            wave1.Add(new NormalEnemy(35));
+            wave1.Add(new NormalEnemy(45));
+            wave1.Add(new FatEnemy(55));
 
             var wave2 = new List<Enemy>();
-            wave2.Add(new Enemy(100, 5, 20, 50, 80, 0));
-            wave2.Add(new Enemy(100, 5, 20, 50, 80, 10));
-            wave2.Add(new Enemy(100, 5, 20, 50, 80, 17));
-            wave2.Add(new Enemy(100, 5, 20, 50, 80, 22));
-            wave2.Add(new Enemy(100, 5, 20, 50, 80, 27));
-            wave2.Add(new Enemy(100, 5, 20, 50, 80, 37));
-            wave2.Add(new Enemy(100, 5, 20, 50, 80, 42));
-            wave2.Add(new Enemy(100, 5, 20, 50, 80, 45));
+            wave2.Add(new NormalEnemy(0));
+            wave2.Add(new NormalEnemy(10));
+            wave2.Add(new NormalEnemy(17));
+            wave2.Add(new NormalEnemy(22));
+            wave2.Add(new NormalEnemy(27));
+            wave2.Add(new FatEnemy(37));
+            wave2.Add(new FatEnemy(42));
+            wave2.Add(new FatEnemy(45));
 
             waves.Add(wave1);
             waves.Add(wave2);
@@ -126,6 +129,15 @@ namespace MAP_Shooter
         {
             return new Point(random.Next(form.Width - sizeX), horizon - sizeY);
         }
+        public static bool IsPixelTransparent(Point click, Enemy enemy)
+        {
+            int x = click.X - enemy.position.X;
+            int y = click.Y - enemy.position.Y;
+            Bitmap zombie = new Bitmap((int)enemy.sizeX, (int)enemy.sizeY);
+            Graphics grp = Graphics.FromImage(zombie);
+            grp.DrawImage(enemy.image, 0, 0, (int)enemy.sizeX, (int)enemy.sizeY);
+            return zombie.GetPixel(x, y).ToArgb() == 0;
+        }
         public static void UpdateDisplay()
         {
             graphics.DrawImage(form.background, 0, 0, form.Width, form.Height);
@@ -133,8 +145,7 @@ namespace MAP_Shooter
             enemies.Sort((Enemy e1, Enemy e2) => e1.position.Y - e2.position.Y);
             foreach (Enemy enemy in enemies)
             {
-                graphics.DrawImage(form.target, enemy.position.X, enemy.position.Y, (int)enemy.sizeX, (int)enemy.sizeY);
-                //graphics.FillRectangle(new SolidBrush(Color.White), enemy.position.X, enemy.position.Y, (int)enemy.size, (int)enemy.size);
+                enemy.Draw();
             }
             form.pictureBox1.Image = bitmap;
         }

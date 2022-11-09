@@ -14,7 +14,6 @@ namespace MAP_Shooter
     public partial class Form1 : Form
     {
         public Image background = Image.FromFile("../../Images/background.jpg");
-        public Image target = Image.FromFile("../../Images/ghost3.png");
         public Image pistol = Image.FromFile("../../Images/Pistol2.png");
         public SoundPlayer backgroundSound = new SoundPlayer("../../Sounds/sound2.wav");
 

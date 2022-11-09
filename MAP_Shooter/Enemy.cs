@@ -10,11 +10,12 @@ using System.Windows.Forms;
 
 namespace MAP_Shooter
 {
-    public class Enemy
+    public abstract class Enemy
     {
         public double health, speed, damage, sizeX, sizeY, positionX;
         public int spawnTime;
         public Point position;
+        public Image image;
 
         public Enemy(double health, double speed, double damage, double sizeX, double sizeY, int spawnTime)
         {
@@ -27,28 +28,24 @@ namespace MAP_Shooter
             position = Engine.GetRandomPoint((int)sizeX, (int)sizeY);
             positionX = position.X;
         }
-        public void Move()
-        {
-            position.Y += (int)speed;
-            sizeX += 1.0 / 4;
-            sizeY += 1.0 / 2;
-            positionX -= 1.0 / 8;
-            position.X = (int)positionX;
-        }
+        public abstract void Move();
+        public abstract void Draw();
         public void GetShot(Point click)
         {
             if (click.X > position.X && click.X < position.X + sizeX && click.Y > position.Y && click.Y < position.Y + sizeY)
             {
-                int x = click.X - position.X;
-                int y = click.Y - position.Y;
-                Bitmap zombie = new Bitmap((int)sizeX, (int)sizeY);
-                Graphics grp = Graphics.FromImage(zombie);
-                grp.DrawImage(Engine.form.target, 0, 0, (int)sizeX, (int)sizeY);
-                if (zombie.GetPixel(x, y).ToArgb() == 0)
+                if (Engine.IsPixelTransparent(click, this))
                     return;
-
-                health -= 20;
-                Engine.graphics.DrawString("20", new Font("Arial", 12), new SolidBrush(Color.Black), click.X, click.Y - 20);
+                if (click.Y - position.Y < sizeY / 4)
+                {
+                    health -= 50;
+                    Engine.graphics.DrawString("50", new Font("Arial", 12), new SolidBrush(Color.Red), click.X, click.Y - 20);
+                }
+                else
+                {
+                    health -= 20;
+                    Engine.graphics.DrawString("20", new Font("Arial", 12), new SolidBrush(Color.Black), click.X, click.Y - 20);
+                }
                 Engine.form.pictureBox1.Image = Engine.bitmap;
             }
         }
