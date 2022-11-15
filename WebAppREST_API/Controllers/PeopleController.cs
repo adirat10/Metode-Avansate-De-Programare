@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
+using WebAppREST_API.Models;
+using WebAppREST_API.Repositories;
 
 namespace WebAppREST_API.Controllers
 {
@@ -7,36 +8,51 @@ namespace WebAppREST_API.Controllers
     [ApiController]
     public class PeopleController : ControllerBase
     {
-        // GET: api/<ValuesController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly PeopleRepository _peopleRepository;
+        public PeopleController()
         {
-            return new string[] { "value1", "value2" };
+            _peopleRepository = new PeopleRepository();
+        }
+
+        [HttpGet]
+        public IEnumerable<Person> Get()
+        {
+            return _peopleRepository.people;
         }
 
         // GET api/<ValuesController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public Person Get(int id)
         {
-            return "value";
+            return _peopleRepository.people.FirstOrDefault(person => person.Id == id);
         }
 
         // POST api/<ValuesController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post([FromBody] Person body)
         {
+            _peopleRepository.people.Add(body);
         }
 
         // PUT api/<ValuesController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void Put(int id, [FromBody] Person body)
         {
+            Person dbPerson = _peopleRepository.people.FirstOrDefault(person => person.Id == id);
+
+            dbPerson.FirstName = body.FirstName;
+            dbPerson.LastName = body.LastName;
+            dbPerson.NickName = body.NickName;
+            dbPerson.Ocupation = body.Ocupation;
+            dbPerson.Country = body.Country;
+            dbPerson.Age = body.Age;
         }
 
         // DELETE api/<ValuesController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            _peopleRepository.people.RemoveAll(person => person.Id == id);
         }
     }
 }
