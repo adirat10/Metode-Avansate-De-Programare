@@ -23,11 +23,16 @@ namespace MAP_Shooter
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-            pictureBox1.Width = this.Width;
-            pictureBox1.Height = this.Height;
+            pictureBox1.Width = MenuScreen.Width = this.Width;
+            pictureBox1.Height = MenuScreen.Height = this.Height;
             Timelabel.Parent = WaveLabel.Parent = HealthLabel.Parent = pictureBox1;
             Gun.Parent = pictureBox1;
-            backgroundSound.PlayLooping();
+            StartButton.Parent = ExitButton.Parent = MenuScreen;
+            StartButton.Left = this.Width / 2 - StartButton.Width / 2;
+            ExitButton.Left = this.Width / 2 - ExitButton.Width / 2;
+            StartButton.Top = this.Height / 2 - StartButton.Height;
+            ExitButton.Top = this.Height / 2 + 10;
+
             Engine.Init(this);
         }
         private void Form1_KeyUp(object sender, KeyEventArgs e)
@@ -55,6 +60,18 @@ namespace MAP_Shooter
         {
             Gun.Location = new Point(e.Location.X, e.Location.Y + 20);
         }
+
+        private void ExitButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void StartButton_Click(object sender, EventArgs e)
+        {
+            timer1.Enabled = true;
+            MenuScreen.Visible = false;
+            MenuScreen.Enabled = false;
+            backgroundSound.PlayLooping();
+        }
     }
 }
-

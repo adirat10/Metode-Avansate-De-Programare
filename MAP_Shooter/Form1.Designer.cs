@@ -36,8 +36,12 @@
             this.HealthLabel = new System.Windows.Forms.Label();
             this.WaveLabel = new System.Windows.Forms.Label();
             this.Gun = new System.Windows.Forms.PictureBox();
+            this.MenuScreen = new System.Windows.Forms.PictureBox();
+            this.StartButton = new System.Windows.Forms.Button();
+            this.ExitButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Gun)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MenuScreen)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -58,7 +62,6 @@
             // 
             // timer1
             // 
-            this.timer1.Enabled = true;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // Timelabel
@@ -111,11 +114,51 @@
             this.Gun.TabIndex = 4;
             this.Gun.TabStop = false;
             // 
+            // MenuScreen
+            // 
+            this.MenuScreen.BackColor = System.Drawing.Color.SteelBlue;
+            this.MenuScreen.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("MenuScreen.BackgroundImage")));
+            this.MenuScreen.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.MenuScreen.Location = new System.Drawing.Point(-69, 0);
+            this.MenuScreen.Name = "MenuScreen";
+            this.MenuScreen.Size = new System.Drawing.Size(850, 323);
+            this.MenuScreen.TabIndex = 5;
+            this.MenuScreen.TabStop = false;
+            // 
+            // StartButton
+            // 
+            this.StartButton.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.StartButton.BackColor = System.Drawing.Color.Gray;
+            this.StartButton.Font = new System.Drawing.Font("Comic Sans MS", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.StartButton.Location = new System.Drawing.Point(361, 182);
+            this.StartButton.Name = "StartButton";
+            this.StartButton.Size = new System.Drawing.Size(150, 70);
+            this.StartButton.TabIndex = 6;
+            this.StartButton.Text = "PLAY";
+            this.StartButton.UseVisualStyleBackColor = false;
+            this.StartButton.Click += new System.EventHandler(this.StartButton_Click);
+            // 
+            // ExitButton
+            // 
+            this.ExitButton.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.ExitButton.BackColor = System.Drawing.Color.Red;
+            this.ExitButton.Font = new System.Drawing.Font("Comic Sans MS", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ExitButton.Location = new System.Drawing.Point(361, 268);
+            this.ExitButton.Name = "ExitButton";
+            this.ExitButton.Size = new System.Drawing.Size(150, 70);
+            this.ExitButton.TabIndex = 7;
+            this.ExitButton.Text = "EXIT";
+            this.ExitButton.UseVisualStyleBackColor = false;
+            this.ExitButton.Click += new System.EventHandler(this.ExitButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1056, 589);
+            this.Controls.Add(this.ExitButton);
+            this.Controls.Add(this.StartButton);
+            this.Controls.Add(this.MenuScreen);
             this.Controls.Add(this.Gun);
             this.Controls.Add(this.WaveLabel);
             this.Controls.Add(this.HealthLabel);
@@ -129,6 +172,7 @@
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyUp);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Gun)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MenuScreen)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -142,6 +186,9 @@
         public System.Windows.Forms.Label HealthLabel;
         public System.Windows.Forms.Label WaveLabel;
         private System.Windows.Forms.PictureBox Gun;
+        private System.Windows.Forms.PictureBox MenuScreen;
+        private System.Windows.Forms.Button StartButton;
+        private System.Windows.Forms.Button ExitButton;
     }
 }
 
