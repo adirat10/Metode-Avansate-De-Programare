@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Security.Policy;
 using System.Text;
@@ -18,8 +19,9 @@ namespace MAP_Shooter
         public static Random random = new Random();
         public static List<Enemy> enemies = new List<Enemy>(), currentWave = new List<Enemy>();
         public static List<List<Enemy>> waves = new List<List<Enemy>>();
-        public static Graphics graphics;
-        public static Bitmap bitmap;
+        public static Graphics graphics, healthBarGraphics;
+        public static Bitmap bitmap, healtBarBitmap;
+
         public static int horizon = 100, wave = 1;
         public static double time = 0;
         public static double fortHealth = 100;
@@ -29,6 +31,10 @@ namespace MAP_Shooter
             form = f1;
             bitmap = new Bitmap(form.Width, form.Height);
             graphics = Graphics.FromImage(bitmap);
+
+            healtBarBitmap = new Bitmap(form.HealthBar.Width, form.HealthBar.Height);
+            healthBarGraphics = Graphics.FromImage(healtBarBitmap);
+            DrawGradient();
 
             var wave1 = new List<Enemy>();
             wave1.Add(new NormalEnemy(0));
@@ -116,7 +122,7 @@ namespace MAP_Shooter
             {
                 Enemy enemy = enemies[i];
                 enemy.Move();
-                if (enemy.position.Y >= form.Height)
+                if (enemy.position.Y >= form.pictureBox1.Height)
                 {
                     fortHealth -= enemy.damage;
                     form.HealthLabel.Text = $"Health:{fortHealth}";
@@ -138,6 +144,18 @@ namespace MAP_Shooter
             grp.DrawImage(enemy.image, 0, 0, (int)enemy.sizeX, (int)enemy.sizeY);
             return zombie.GetPixel(x, y).ToArgb() == 0;
         }
+        public static void DrawGradient()
+        {
+            float width = form.HealthBar.Width * (float)(fortHealth / 100);
+
+            var redYellowbrush = new LinearGradientBrush(new RectangleF(0, 0, width / 2, form.HealthBar.Height), Color.Red, Color.Yellow, 0f);
+            var yellowGreenbrush = new LinearGradientBrush(new RectangleF(0, 0, width / 2, form.HealthBar.Height), Color.Yellow, Color.Green, 0f);
+            healthBarGraphics.FillRectangle(redYellowbrush, 0, 0, width / 2, form.HealthBar.Height);
+            healthBarGraphics.FillRectangle(yellowGreenbrush, 0, 0, width / 2, form.HealthBar.Height);
+
+            healthBarGraphics.FillRectangle(new SolidBrush(Color.DarkGray), width, 0, form.HealthBar.Width, form.HealthBar.Height);
+            form.HealthBar.Image = healtBarBitmap;
+        }
         public static void UpdateDisplay()
         {
             graphics.DrawImage(form.background, 0, 0, form.Width, form.Height);
@@ -147,6 +165,11 @@ namespace MAP_Shooter
             {
                 enemy.Draw();
             }
+            form.pictureBox1.Image = bitmap;
+        }
+        public static void BlurBackground()
+        {
+            graphics.FillRectangle(new SolidBrush(Color.FromArgb(200, Color.Black)), 0, 0, form.Width, form.Height);
             form.pictureBox1.Image = bitmap;
         }
     }

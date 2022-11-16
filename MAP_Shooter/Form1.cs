@@ -23,15 +23,24 @@ namespace MAP_Shooter
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-            pictureBox1.Width = MenuScreen.Width = this.Width;
-            pictureBox1.Height = MenuScreen.Height = this.Height;
-            Timelabel.Parent = WaveLabel.Parent = HealthLabel.Parent = pictureBox1;
+            pictureBox1.Width = MenuScreen.Width = StatusBar.Width = this.Width;
+            pictureBox1.Height = this.Height - StatusBar.Height;
+            MenuScreen.Height = this.Height;
+
+            Timelabel.Parent = WaveLabel.Parent = HealthLabel.Parent = HealthBar.Parent = StatusBar;
             Gun.Parent = pictureBox1;
             StartButton.Parent = ExitButton.Parent = MenuScreen;
-            StartButton.Left = this.Width / 2 - StartButton.Width / 2;
-            ExitButton.Left = this.Width / 2 - ExitButton.Width / 2;
-            StartButton.Top = this.Height / 2 - StartButton.Height;
-            ExitButton.Top = this.Height / 2 + 10;
+
+            StartButton.Left = this.Width - StartButton.Width - 25;
+            ExitButton.Left = this.Width - ExitButton.Width - 25;
+            StartButton.Top = this.Height - StartButton.Height - 690;
+            ExitButton.Top = this.Height - ExitButton.Height - 105;
+            OptionsButton.Top = this.Height - OptionsButton.Height - 260;
+            OptionsButton.Left = this.Width - OptionsButton.Width - 25;
+            HelpButton.Top = this.Height - HelpButton.Height - 400;
+            HelpButton.Left = this.Width - HelpButton.Width - 25;
+            HighscoreButton.Top = this.Height - HighscoreButton.Height - 550;
+            HighscoreButton.Left = this.Width - HighscoreButton.Width - 25;
 
             Engine.Init(this);
         }
@@ -40,6 +49,8 @@ namespace MAP_Shooter
             if (e.KeyCode == Keys.Escape)
             {
                 timer1.Enabled = false;
+                Engine.BlurBackground();
+
                 backgroundSound.Stop();
                 var option = MessageBox.Show("Are you sure you want to exit this game? Your progress will not be saved!",
                     "Exit game", MessageBoxButtons.OKCancel);
@@ -60,17 +71,21 @@ namespace MAP_Shooter
         {
             Gun.Location = new Point(e.Location.X, e.Location.Y + 20);
         }
-
         private void ExitButton_Click(object sender, EventArgs e)
         {
             this.Close();
         }
-
         private void StartButton_Click(object sender, EventArgs e)
         {
             timer1.Enabled = true;
             MenuScreen.Visible = false;
             MenuScreen.Enabled = false;
+            OptionsButton.Visible = false;
+            HelpButton.Visible = false;
+            HighscoreButton.Visible = false;
+            OptionsButton.Visible = false;
+            HelpButton.Visible = false;
+            HighscoreButton.Enabled = false;
             backgroundSound.PlayLooping();
         }
     }
