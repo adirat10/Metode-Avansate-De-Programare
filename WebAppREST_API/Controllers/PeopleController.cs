@@ -16,37 +16,63 @@ namespace WebAppREST_API.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Person> Get()
+        public ActionResult<IEnumerable<Person>> Get()
         {
-            return _peopleRepository.GetAll();
+            var people = _peopleRepository.GetAll();
+            return new OkObjectResult(people);
         }
 
         // GET api/<ValuesController>/5
         [HttpGet("{id}")]
-        public Person Get(int id)
+        public ActionResult<Person> Get(int id)
         {
-            return _peopleRepository.GetOne(id);
+            try
+            {
+                Person person = _peopleRepository.GetOne(id);
+                return new OkObjectResult(person);
+            }
+            catch (InvalidOperationException ioe)
+            {
+                return new NotFoundResult();
+            }
         }
 
         // POST api/<ValuesController>
         [HttpPost]
-        public void Post([FromBody] Person body)
+        public ActionResult Post([FromBody] Person body)
         {
             _peopleRepository.CreateOne(body);
+            return new OkResult();
         }
 
         // PUT api/<ValuesController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Person body)
+        public ActionResult Put(int id, [FromBody] Person body)
         {
-            _peopleRepository.EditOne(id, body);
+            try
+            {
+                _peopleRepository.EditOne(id, body);
+                return new OkResult();
+            }
+            catch (InvalidOperationException ioe)
+            {
+                return new NotFoundResult();
+            }
         }
 
         // DELETE api/<ValuesController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult Delete(int id)
         {
-            _peopleRepository.DeleteOne(id);
+            try
+            {
+                _peopleRepository.DeleteOne(id);
+                return new OkResult();
+            }
+            catch (InvalidOperationException ioe)
+            {
+                return new NotFoundResult();
+            }
         }
     }
 }

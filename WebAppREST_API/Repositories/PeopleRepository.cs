@@ -21,7 +21,7 @@ namespace WebAppREST_API.Repositories
         }
         public Person GetOne(int id)
         {
-            return _applicationDbContext.People.FirstOrDefault(person => person.Id == id);
+            return _applicationDbContext.People.First(person => person.Id == id);
         }
         public void CreateOne(Person person)
         {
