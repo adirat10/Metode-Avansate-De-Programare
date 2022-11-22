@@ -15,9 +15,24 @@ namespace WebAppREST_API.Repositories
         {
             _applicationDbContext = applicationDbContext;
         }
-        public List<Person> GetAll()
+        public List<Person> GetFilterAndPaginated(string search, int page, int pageSz)
         {
-            return _applicationDbContext.People.ToList();
+            int pageSkip = page - 1;
+            if (pageSkip == -1)
+                pageSkip = 0;
+            int pageSize = pageSz;
+            if (pageSize == 0)
+                pageSize = 10;
+
+            List<Person> people = _applicationDbContext.People
+                .ToList()
+                .Where(person => SearchInteligent(person, search))
+                .ToList();
+            people = people
+                .Skip(pageSkip * pageSize)
+                .Take(pageSize)
+                .ToList();
+            return people;
         }
         public Person GetOne(int id)
         {
@@ -46,6 +61,32 @@ namespace WebAppREST_API.Repositories
             Person dbPerson = GetOne(id);
             _applicationDbContext.People.Remove(dbPerson);
             _applicationDbContext.SaveChanges();
+        }
+        private bool SearchInteligent(Person person, string input)
+        {
+            if (string.IsNullOrEmpty(input))
+                return true;
+            // avem nevoie de toate numele separate
+            char[] separatori = new char[] { ' ', '-' };
+            string numePrenume = $"{person.FirstName} {person.LastName}";
+            string[] toateNumele = numePrenume.Split(separatori);
+
+            // si inputul trebuie separat
+            string[] inputs = input.Split(separatori);
+
+            for (int i = 0; i < inputs.Length; i++)
+            {
+                // presupunem ca inputul curent nu apare in nume
+                bool ok = false;
+                // si verificam daca apare in vreun nume
+                for (int j = 0; j < toateNumele.Length; j++)
+                    if (toateNumele[j].ToLower().Contains(inputs[i].ToLower()))
+                        ok = true;
+
+                if (!ok)
+                    return false;
+            }
+            return true;
         }
     }
 }

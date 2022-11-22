@@ -3,33 +3,35 @@ using WebAppREST_API.Data;
 using WebAppREST_API.Models;
 using WebAppREST_API.Repositories;
 
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
 namespace WebAppREST_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PeopleController : ControllerBase
+    public class EmailsController : ControllerBase
     {
-        private readonly PeopleRepository _peopleRepository;
-        public PeopleController(ApplicationDbContext applicationDbContext)
+        private readonly EmailRepository _emailRepository;
+        public EmailsController(ApplicationDbContext applicationDbContext)
         {
-            _peopleRepository = new PeopleRepository(applicationDbContext);
+            _emailRepository = new EmailRepository(applicationDbContext);
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Person>> GetFilterAndPaginated([FromQuery] string? search, [FromQuery] int page, [FromQuery] int pageSize)
+        public ActionResult<IEnumerable<Email>> GetFilterAndPaginated()
         {
-            var people = _peopleRepository.GetFilterAndPaginated(search, page, pageSize);
-            return new OkObjectResult(people);
+            var emails = _emailRepository.GetAll();
+            return new OkObjectResult(emails);
         }
 
         // GET api/<ValuesController>/5
         [HttpGet("{id}")]
-        public ActionResult<Person> Get(int id)
+        public ActionResult<Email> Get(int id)
         {
             try
             {
-                Person person = _peopleRepository.GetOne(id);
-                return new OkObjectResult(person);
+                Email email = _emailRepository.GetOne(id);
+                return new OkObjectResult(email);
             }
             catch (InvalidOperationException ioe)
             {
@@ -39,19 +41,19 @@ namespace WebAppREST_API.Controllers
 
         // POST api/<ValuesController>
         [HttpPost]
-        public ActionResult Post([FromBody] Person body)
+        public ActionResult Post([FromBody] Email body)
         {
-            _peopleRepository.CreateOne(body);
+            _emailRepository.CreateOne(body);
             return new OkResult();
         }
 
         // PUT api/<ValuesController>/5
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] Person body)
+        public ActionResult Put(int id, [FromBody] Email body)
         {
             try
             {
-                _peopleRepository.EditOne(id, body);
+                _emailRepository.EditOne(id, body);
                 return new OkResult();
             }
             catch (InvalidOperationException ioe)
@@ -66,7 +68,7 @@ namespace WebAppREST_API.Controllers
         {
             try
             {
-                _peopleRepository.DeleteOne(id);
+                _emailRepository.DeleteOne(id);
                 return new OkResult();
             }
             catch (InvalidOperationException ioe)
