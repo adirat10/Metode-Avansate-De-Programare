@@ -31,5 +31,20 @@ namespace MAP_Platformer
                 }
             }
         }
+        public static void CheckIfYouLose()
+        {
+            if (form.player.image.Top > form.Height)
+            {
+                form.timer1.Enabled = false;
+                var response = MessageBox.Show("You fell off and died!\nDo you want to restart?", "You Lose!", MessageBoxButtons.YesNo);
+                if (response == DialogResult.Yes)
+                {
+                    form.player.image.Parent = null;
+                    form.player = new Player();
+                    form.timer1.Enabled = true;
+                }
+                else form.Close();
+            }
+        }
     }
 }

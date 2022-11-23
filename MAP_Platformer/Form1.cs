@@ -49,6 +49,7 @@ namespace MAP_Platformer
         private void timer1_Tick(object sender, EventArgs e)
         {
             player.Move();
+            Engine.CheckIfYouLose();
         }
     }
 }
