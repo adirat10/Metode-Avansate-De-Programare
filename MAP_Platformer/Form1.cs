@@ -15,6 +15,7 @@ namespace MAP_Platformer
         public Player player;
         public Form1()
         {
+            DoubleBuffered = true;
             InitializeComponent();
         }
 

@@ -20,7 +20,9 @@ namespace MAP_Platformer
             image.Parent = Engine.form;
             image.Location = new Point(Engine.form.Width / 2, Engine.form.Height * 3 / 4);
             image.Size = new Size(100, 100);
-            image.BackColor = Color.ForestGreen;
+            image.BackColor = Color.Transparent;
+            image.Image = Image.FromFile("../../Images/Player.png");
+            image.SizeMode = PictureBoxSizeMode.StretchImage;
 
         }
         public void Move()
