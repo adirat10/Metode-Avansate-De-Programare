@@ -12,7 +12,7 @@ namespace MAP_Platformer
     {
         public PictureBox image;
         public int speed = 5, gravity;
-        public bool isMovingLeft, isMovingRight;
+        public bool isMovingLeft, isMovingRight, isJumping = true;
         public const int maxGravity = 15;
         public Player()
         {
@@ -29,8 +29,10 @@ namespace MAP_Platformer
                 image.Left -= speed;
             else if (isMovingRight)
                 image.Left += speed;
+
             gravity = Math.Min(maxGravity, gravity + 1);
             image.Top += gravity;
+            Engine.PlayerCollision();
         }
     }
 }

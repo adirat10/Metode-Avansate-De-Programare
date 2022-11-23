@@ -33,7 +33,11 @@ namespace MAP_Platformer
             if (e.KeyCode == Keys.Right || e.KeyCode == Keys.D)
                 player.isMovingRight = true;
             if (e.KeyCode == Keys.Up || e.KeyCode == Keys.W)
-                player.gravity = -15;
+            {
+                if (!player.isJumping)
+                    player.gravity = -15;
+                player.isJumping = true;
+            }
         }
         private void Form1_KeyUp(object sender, KeyEventArgs e)
         {
