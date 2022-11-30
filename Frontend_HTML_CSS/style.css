@@ -1,0 +1,12 @@
+html {
+    height: 100vh;
+}
+
+body {
+    height: 100vh;
+    background-color: rgb(70,70,70) !important;
+}
+
+.container {
+    padding-top: 20px;
+}
