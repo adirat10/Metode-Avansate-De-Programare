@@ -16,11 +16,11 @@ namespace Flappy_Bird
 
         public Pipes()
         {
-            int y = Engine.random.Next(Engine.delta, Engine.form.Height - Engine.Gap - Engine.delta);
+            int y = Engine.random.Next(Engine.delta, Engine.form1.Height - Engine.Gap - Engine.delta);
 
             UpPipe = new PictureBox();
-            UpPipe.Parent = Engine.form;
-            UpPipe.Location = new Point(Engine.form.Width, 0);
+            UpPipe.Parent = Engine.form1;
+            UpPipe.Location = new Point(Engine.form1.Width, 0);
             UpPipe.Size = new Size(80, y);
             UpPipe.BackColor = Color.Transparent;
             UpPipe.Image = Image.FromFile("../../Images/pipe.png");
@@ -28,9 +28,9 @@ namespace Flappy_Bird
             UpPipe.SizeMode = PictureBoxSizeMode.StretchImage;
 
             DownPipe = new PictureBox();
-            DownPipe.Parent = Engine.form;
-            DownPipe.Location = new Point(Engine.form.Width, y + Engine.Gap);
-            DownPipe.Size = new Size(80, Engine.form.Height - y - Engine.Gap);
+            DownPipe.Parent = Engine.form1;
+            DownPipe.Location = new Point(Engine.form1.Width, y + Engine.Gap);
+            DownPipe.Size = new Size(80, Engine.form1.Height - y - Engine.Gap);
             DownPipe.BackColor = Color.Transparent;
             DownPipe.Image = Image.FromFile("../../Images/pipe.png");
             DownPipe.SizeMode = PictureBoxSizeMode.StretchImage;

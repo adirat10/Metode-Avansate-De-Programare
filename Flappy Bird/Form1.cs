@@ -21,10 +21,10 @@ namespace Flappy_Bird
             DoubleBuffered = true;
             InitializeComponent();
             timer1.Enabled = false;
+            Engine.Initialize(this);
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-            Engine.Initialize(this);
             player = new Player();
             pipes = new List<Pipes>();
         }
@@ -50,7 +50,6 @@ namespace Flappy_Bird
         }
         private void timer1_Tick(object sender, EventArgs e)
         {
-
             player.Fall();
             Count++;
             if (Count % 100 == 0)

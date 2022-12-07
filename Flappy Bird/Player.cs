@@ -12,17 +12,16 @@ namespace Flappy_Bird
     {
         public PictureBox image;
         public int gravity = 0;
-        public const int MaxGravity = 13;
+        public const int MaxGravity = 10;
         public Player()
         {
             image = new PictureBox();
-            image.Parent = Engine.form;
-            image.Location = new Point(Engine.form.Left + 50, Engine.form.Height / 2);
+            image.Parent = Engine.form1;
+            image.Location = new Point(Engine.form1.Left + 50, Engine.form1.Top + 20);
             image.Size = new Size(70, 60);
             image.BackColor = Color.Transparent;
             image.Image = Image.FromFile("../../Images/bird.png");
             image.SizeMode = PictureBoxSizeMode.StretchImage;
-
         }
         public void Fall()
         {
@@ -33,7 +32,7 @@ namespace Flappy_Bird
         }
         public void Jump()
         {
-            gravity = -MaxGravity;
+            gravity = -MaxGravity - 3;
         }
     }
 }
