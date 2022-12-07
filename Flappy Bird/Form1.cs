@@ -20,6 +20,7 @@ namespace Flappy_Bird
         {
             DoubleBuffered = true;
             InitializeComponent();
+            timer1.Enabled = false;
         }
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -40,6 +41,13 @@ namespace Flappy_Bird
         {
             player.Fall();
         }
+        private void button1_Click(object sender, EventArgs e)
+        {
+            timer1.Enabled = true;
+            button1.Enabled = false;
+            button1.Visible = false;
+            this.Focus();
+        }
         private void timer1_Tick(object sender, EventArgs e)
         {
 
@@ -50,9 +58,12 @@ namespace Flappy_Bird
             foreach (Pipes p in pipes)
             {
                 p.Move();
-                if (player.image.Left >= p.DownPipe.Left)
+                if (player.image.Left >= p.DownPipe.Left && !p.isPassed)
+                {
+                    p.isPassed = true;
+                    score++;
                     label1.Text = Convert.ToString(score);
-                score++;
+                }
             }
             Engine.CheckIfYouLose();
         }

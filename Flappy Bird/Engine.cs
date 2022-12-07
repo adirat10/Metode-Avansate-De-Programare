@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,9 +13,17 @@ namespace Flappy_Bird
         public static Form1 form;
         public static Random random = new Random();
         public const int Gap = 200, delta = 50;
+        public static PictureBox Ground;
         public static void Initialize(Form1 f)
         {
             form = f;
+            Ground = new PictureBox();
+            Ground.Parent = form;
+            Ground.Location = new Point(0,370);
+            Ground.Size = new Size(form.Width,form.Height);
+            Ground.BackColor = Color.Transparent;
+            Ground.Image = Image.FromFile("../../Images/ground.png");
+            Ground.SizeMode = PictureBoxSizeMode.StretchImage;
         }
         public static void CheckIfYouLose()
         {

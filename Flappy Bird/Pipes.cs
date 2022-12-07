@@ -12,6 +12,8 @@ namespace Flappy_Bird
     {
         public PictureBox UpPipe;
         public PictureBox DownPipe;
+        public bool isPassed = false;
+
         public Pipes()
         {
             int y = Engine.random.Next(Engine.delta, Engine.form.Height - Engine.Gap - Engine.delta);
@@ -32,7 +34,6 @@ namespace Flappy_Bird
             DownPipe.BackColor = Color.Transparent;
             DownPipe.Image = Image.FromFile("../../Images/pipe.png");
             DownPipe.SizeMode = PictureBoxSizeMode.StretchImage;
-
         }
         public void Move()
         {
