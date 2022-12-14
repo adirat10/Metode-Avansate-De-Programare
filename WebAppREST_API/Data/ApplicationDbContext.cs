@@ -9,12 +9,16 @@ namespace WebAppREST_API.Data
             : base(options)
         {
         }
-        public DbSet<Person> People { get; set; }
-        public DbSet<Email> Emails { get; set; }
+        public DbSet<Person> People { get; set; } = null!;
+        public DbSet<Email> Emails { get; set; } = null!;
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Email>().HasOne(e => e.From).WithMany(p => p.SentEmails);
-            //odelBuilder.Entity<Email>().HasMany(e => e.To).WithMany(p => p.InboxEmails);
+
+            modelBuilder.Entity<Person>()
+                .Property(p => p.Id)
+                .ValueGeneratedOnAdd();
+            //modelBuilder.Entity<Email>().HasMany(e => e.To).WithMany(p => p.InboxEmails);
         }
     }
 }

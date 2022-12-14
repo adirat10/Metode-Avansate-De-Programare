@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
+using System.Media;
 
 namespace Flappy_Bird
 {
@@ -16,6 +17,7 @@ namespace Flappy_Bird
         public static Random random = new Random();
         public const int Gap = 200, delta = 50;
         public static PictureBox Ground;
+        public static SoundPlayer hitSound = new SoundPlayer("../../Sounds/hit.wav");
         public static void Initialize(Form1 f)
         {
             form1 = f;
@@ -35,6 +37,7 @@ namespace Flappy_Bird
                 {
                     if (form1.player.image.Bounds.IntersectsWith((control as PictureBox).Bounds))
                     {
+                        hitSound.Play();
                         form1.timer1.Enabled = false;
 
                         var response = MessageBox.Show("Do you want to restart?", "You Lost!", MessageBoxButtons.YesNo);

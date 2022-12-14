@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
 using WebAppREST_API.Data;
 using WebAppREST_API.Models;
 using WebAppREST_API.Repositories;

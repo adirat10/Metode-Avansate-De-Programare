@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -16,6 +17,9 @@ namespace Flappy_Bird
         public List<Pipes> pipes;
         public int Count = 0;
         public int score = 0;
+        public SoundPlayer tapSound = new SoundPlayer("../../Sounds/tap.wav");
+        public SoundPlayer pointSound = new SoundPlayer("../../Sounds/point.wav");
+
         public Form1()
         {
             DoubleBuffered = true;
@@ -35,6 +39,7 @@ namespace Flappy_Bird
             if (e.KeyCode == Keys.Up || e.KeyCode == Keys.Space)
             {
                 player.Jump();
+                tapSound.Play();
             }
         }
         private void Form1_KeyUp(object sender, KeyEventArgs e)
@@ -59,9 +64,11 @@ namespace Flappy_Bird
                 p.Move();
                 if (player.image.Left >= p.DownPipe.Left && !p.isPassed)
                 {
+                    pointSound.Play();
                     p.isPassed = true;
                     score++;
                     label1.Text = Convert.ToString(score);
+                    
                 }
             }
             Engine.CheckIfYouLose();

@@ -46,6 +46,7 @@ namespace MAP_Shooter
         }
         private void Form1_KeyUp(object sender, KeyEventArgs e)
         {
+            backgroundSound.Stop();
             if (e.KeyCode == Keys.Escape)
             {
                 timer1.Enabled = false;

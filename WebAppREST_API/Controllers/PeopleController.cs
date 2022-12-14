@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
 using WebAppREST_API.Data;
 using WebAppREST_API.Models;
 using WebAppREST_API.Repositories;
@@ -16,7 +18,7 @@ namespace WebAppREST_API.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Person>> GetFilterAndPaginated([FromQuery] string? search, [FromQuery] int page, [FromQuery] int pageSize)
+        public ActionResult<IEnumerable<Person>> GetFilterAndPaginated([FromQuery] string search, [FromQuery] int page, [FromQuery] int pageSize)
         {
             var people = _peopleRepository.GetFilterAndPaginated(search, page, pageSize);
             return new OkObjectResult(people);

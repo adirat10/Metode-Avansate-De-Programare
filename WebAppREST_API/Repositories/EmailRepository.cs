@@ -1,4 +1,6 @@
-﻿using WebAppREST_API.Data;
+﻿using System.Collections.Generic;
+using System.Linq;
+using WebAppREST_API.Data;
 using WebAppREST_API.Models;
 
 namespace WebAppREST_API.Repositories
