@@ -26,6 +26,8 @@ namespace Flappy_Bird
             DoubleBuffered = true;
             InitializeComponent();
             timer1.Enabled = false;
+            pictureBox1.Enabled = false;
+            pictureBox1.Visible = false;
             Engine.Initialize(this);
         }
         private void Form1_Load(object sender, EventArgs e)
@@ -69,7 +71,6 @@ namespace Flappy_Bird
                     p.isPassed = true;
                     score++;
                     label1.Text = Convert.ToString(score);
-                    
                 }
             }
             Engine.CheckIfYouLose();

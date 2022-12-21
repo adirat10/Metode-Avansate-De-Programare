@@ -17,16 +17,13 @@ namespace Flappy_Bird
         {
             InitializeComponent();
             listBox1.Visible = false;
+            label2.Visible = false;
             button4.Visible = false;
         }
-
         private void Menu_Load(object sender, EventArgs e)
         {
-            File.ReadLines("../../Score.txt")
-                .OrderByDescending(score => score)
-                .Take(10)
-                .ToList()
-                .ForEach(score => listBox1.Items.Add(score));
+
+            Engine.LoadScores().ForEach(score => listBox1.Items.Add(score));
         }
         private void initForm1(Image background)
         {
@@ -53,11 +50,13 @@ namespace Flappy_Bird
         {
             listBox1.Visible = true;
             button4.Visible = true;
+            label2.Visible = true;
         }
         private void button4_Click(object sender, EventArgs e)
         {
             listBox1.Visible = false;
             button4.Visible = false;
+            label2.Visible = false;
         }
     }
 }

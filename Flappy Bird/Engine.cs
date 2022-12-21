@@ -49,7 +49,7 @@ namespace Flappy_Bird
                             sw.WriteLine(form1.score);
                         }
 
-                        var response = MessageBox.Show("Do you want to restart?", "You Lost!", MessageBoxButtons.YesNo);
+                        var response = MessageBox.Show($"Your score: {form1.score}\nHighest score: {Engine.LoadScores()[0]}\nDo you want to restart?", "You Lost!", MessageBoxButtons.YesNo);
                         if (response == DialogResult.Yes)
                         {
                             form1.score = 0;
@@ -64,15 +64,20 @@ namespace Flappy_Bird
                             form1.player = new Player();
                             form1.Count = 0;
                             form1.timer1.Enabled = true;
+                            form1.pictureBox1.Enabled = true;
+                            form1.pictureBox1.Visible = false;
                         }
                         else Application.Exit();
                     }
                 }
             }
         }
-        public static bool IsPixelTransparent(Player player)
+        public static List<string> LoadScores()
         {
-            return true;
+            return File.ReadLines("../../Score.txt")
+                .OrderByDescending(score => int.Parse(score))
+                .Take(10)
+                .ToList();
         }
     }
 }
