@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,11 +16,17 @@ namespace Flappy_Bird
         public Menu()
         {
             InitializeComponent();
+            listBox1.Visible = false;
+            button4.Visible = false;
         }
 
         private void Menu_Load(object sender, EventArgs e)
         {
-            this.Focus();
+            File.ReadLines("../../Score.txt")
+                .OrderByDescending(score => score)
+                .Take(10)
+                .ToList()
+                .ForEach(score => listBox1.Items.Add(score));
         }
         private void initForm1(Image background)
         {
@@ -27,6 +34,11 @@ namespace Flappy_Bird
             Engine.form1.BackgroundImage = background;
             this.Visible = false;
             Engine.form1.ShowDialog();
+        }
+        private void Menu_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+                Application.Exit();
         }
         private void button1_Click(object sender, EventArgs e)
         {
@@ -37,10 +49,15 @@ namespace Flappy_Bird
         {
             initForm1(button2.BackgroundImage);
         }
-        private void Menu_KeyDown(object sender, KeyEventArgs e)
+        private void button3_Click(object sender, EventArgs e)
         {
-            if (e.KeyCode == Keys.Escape)
-                Application.Exit();
+            listBox1.Visible = true;
+            button4.Visible = true;
+        }
+        private void button4_Click(object sender, EventArgs e)
+        {
+            listBox1.Visible = false;
+            button4.Visible = false;
         }
     }
 }

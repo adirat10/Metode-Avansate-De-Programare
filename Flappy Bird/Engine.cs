@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
 using System.Media;
+using System.IO;
+using System.Reflection.Emit;
 
 namespace Flappy_Bird
 {
@@ -39,6 +41,13 @@ namespace Flappy_Bird
                     {
                         hitSound.Play();
                         form1.timer1.Enabled = false;
+
+                        string fileName = @"../../Score.txt";
+                        using (FileStream fs = new FileStream(fileName, FileMode.Append, FileAccess.Write))
+                        using (StreamWriter sw = new StreamWriter(fs))
+                        {
+                            sw.WriteLine(form1.score);
+                        }
 
                         var response = MessageBox.Show("Do you want to restart?", "You Lost!", MessageBoxButtons.YesNo);
                         if (response == DialogResult.Yes)
