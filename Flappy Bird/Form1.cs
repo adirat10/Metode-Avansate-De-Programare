@@ -18,8 +18,22 @@ namespace Flappy_Bird
         public List<Pipes> pipes;
         public int Count = 0;
         public int score = 0;
-        //public SoundPlayer tapSound = new SoundPlayer("../../Sounds/tap.wav");
         public SoundPlayer pointSound = new SoundPlayer("../../Sounds/point.wav");
+
+
+        #region .. code for Flickering ..
+
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle |= 0x02000000;
+                return cp;
+            }
+        }
+
+        #endregion
 
         public Form1()
         {
@@ -42,7 +56,6 @@ namespace Flappy_Bird
             if (e.KeyCode == Keys.Up || e.KeyCode == Keys.Space)
             {
                 player.Jump();
-                //tapSound.Play();
             }
         }
         private void Form1_KeyUp(object sender, KeyEventArgs e)
